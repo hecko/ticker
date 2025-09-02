@@ -1,6 +1,6 @@
 This apps logs Windows session logins/logouts and locks / unlocks into a CSV file so you can generate timesheets easily.
 
-Its not tracking mouse events, its mostly relying on unlock / lock screen events to log information when you star or stop being active on the PC.
+Its not tracking mouse events, its mostly relying on unlock / lock (usually automatic) screen events to log information when you start or stop being active on the PC.
 
 It automatically starts with windows and uses a small tray icon to give you access to the log file.
 
