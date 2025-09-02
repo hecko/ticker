@@ -45,6 +45,8 @@ namespace ticker
 
             // Tray menu
             trayMenu = new ContextMenuStrip();
+            trayMenu.Items.Add("Log a task", null, (s, e) => OpenLogTask());
+            trayMenu.Items.Add(new ToolStripSeparator());
             trayMenu.Items.Add("Open Logs Folder", null, (s, e) => OpenFolder(docs));
             trayMenu.Items.Add("Open Startup Folder", null, (s, e) => OpenFolder(startupFolder));
             trayMenu.Items.Add("Information", null, (s, e) => ShowInformation());
@@ -83,6 +85,12 @@ namespace ticker
                 string line = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss},{evt}";
                 System.IO.File.AppendAllText(logFile, line + Environment.NewLine);
             }
+        }
+
+        private void OpenLogTask()
+        {
+            var form1 = new Form1();
+            form1.Show();
         }
 
         private void EnsureStartupShortcut()

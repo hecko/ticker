@@ -28,19 +28,60 @@
         /// </summary>
         private void InitializeComponent()
         {
+            button1 = new Button();
+            textBox1 = new TextBox();
+            label1 = new Label();
             SuspendLayout();
+            // 
+            // button1
+            // 
+            button1.Location = new Point(345, 9);
+            button1.Name = "button1";
+            button1.Size = new Size(149, 23);
+            button1.TabIndex = 0;
+            button1.Text = "Log";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(47, 9);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(292, 23);
+            textBox1.TabIndex = 1;
+            textBox1.TextChanged += textBox1_TextChanged;
+            textBox1.KeyDown += textBox1_KeyDown;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 12);
+            label1.Name = "label1";
+            label1.Size = new Size(29, 15);
+            label1.TabIndex = 2;
+            label1.Text = "Task";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(502, 41);
+            Controls.Add(label1);
+            Controls.Add(textBox1);
+            Controls.Add(button1);
             Name = "Form1";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             Load += Form1_Load;
+            Shown += Form1_Shown;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Button button1;
+        private TextBox textBox1;
+        private Label label1;
     }
 }
