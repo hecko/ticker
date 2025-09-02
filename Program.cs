@@ -23,6 +23,7 @@ namespace ticker
         private ContextMenuStrip trayMenu;
         private string logFile;
         private string startupFolder;
+        private Form1? currentForm1; // Track the current Form1 instance
 
         public TrayApp()
         {
@@ -59,6 +60,10 @@ namespace ticker
             trayIcon.Icon = SystemIcons.Information;
             trayIcon.ContextMenuStrip = trayMenu;
             trayIcon.Visible = true;
+            
+            // Add left-click event handler to open log task form
+            trayIcon.Click += TrayIcon_Click;
+            trayIcon.MouseDoubleClick += TrayIcon_Click;
 
             // Subscribe to lock/unlock events
             SystemEvents.SessionSwitch += OnSessionSwitch;
@@ -69,6 +74,15 @@ namespace ticker
             // Hide the form
             this.WindowState = FormWindowState.Minimized;
             this.ShowInTaskbar = false;
+        }
+
+        private void TrayIcon_Click(object sender, EventArgs e)
+        {
+            // Check if it's a left-click
+            if (e is MouseEventArgs mouseEvent && mouseEvent.Button == MouseButtons.Left)
+            {
+                OpenLogTask();
+            }
         }
 
         private void OnSessionSwitch(object sender, SessionSwitchEventArgs e)
@@ -89,8 +103,29 @@ namespace ticker
 
         private void OpenLogTask()
         {
-            var form1 = new Form1();
-            form1.Show();
+            // Check if Form1 is already open
+            if (currentForm1 != null && !currentForm1.IsDisposed)
+            {
+                // Bring existing form to front and focus
+                currentForm1.BringToFront();
+                currentForm1.Activate();
+                
+                // If it's minimized, restore it
+                if (currentForm1.WindowState == FormWindowState.Minimized)
+                {
+                    currentForm1.WindowState = FormWindowState.Normal;
+                }
+            }
+            else
+            {
+                // Create new Form1 instance
+                currentForm1 = new Form1();
+                
+                // Subscribe to the FormClosed event to clear the reference
+                currentForm1.FormClosed += (sender, e) => currentForm1 = null;
+                
+                currentForm1.Show();
+            }
         }
 
         private void EnsureStartupShortcut()
@@ -125,6 +160,12 @@ namespace ticker
 
         private void OnExit(object sender, EventArgs e)
         {
+            // Close Form1 if it's open
+            if (currentForm1 != null && !currentForm1.IsDisposed)
+            {
+                currentForm1.Close();
+            }
+
             // log the program exit
             System.IO.File.AppendAllText(logFile, $"{DateTime.Now:yyyy-MM-dd HH:mm:ss},out" + Environment.NewLine);
 

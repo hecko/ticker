@@ -80,5 +80,11 @@ namespace ticker
                 e.SuppressKeyPress = true; // Prevent ding sound
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // close the form
+            this.Close();
+        }
     }
 }
