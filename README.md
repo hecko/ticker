@@ -6,4 +6,6 @@ It automatically starts with windows and uses a small tray icon to give you acce
 
 It does not require Admin privileges to install.
 
+Installation - just get the files from bin directory and run the Exe or compile from the enclosed WinForms Project in Visual Studio 2022
+
 maco@blava.net
